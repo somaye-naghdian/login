@@ -1,8 +1,8 @@
 package ir.dotin.registration.exception;
 
-public class InvalidInputException extends RuntimeException{
+public class InvalidInputException extends HttpException{
 
     public InvalidInputException() {
-        super("invalid input");
+        super("invalid input" , 400);
     }
 }
