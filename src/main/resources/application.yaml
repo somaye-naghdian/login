@@ -1,1 +1,33 @@
+spring:
+  application:
+    name: registration
 
+  #datasource configurations
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://${POSTGRES_HOST:127.0.0.1}:${POSTGRES_PORT:5432}/login?createDatabaseIfNotExist=true
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:dotin12345}
+    db: ${POSTGRES_DB:postgres}
+    driver-class-name: org.postgresql.Driver
+
+#  hibernate:
+#    dialect: org.hibernate.dialect.PostgreSQL10Dialect
+
+  # DDL generation
+  jpa:
+    hibernate:
+      ddl-auto: update # When you launch the application for the first time - switch "none" at "create"
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database: postgresql
+    open-in-view: false
+    generate-ddl: true
+
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    url: ${spring.datasource.url}&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}

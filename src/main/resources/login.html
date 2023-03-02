@@ -10,26 +10,28 @@
     <input type="text" ng-model="user.email" /><br/>
     <label>Password:</label><br/> 
     <input type="text" ng-model="user.password"/><br/>
-    <input type="button" ng-click="reset()" value="Reset" />
-    <input type="submit" ng-click="update(user)" value="Save" />
+<!--    <input type="button" ng-click="reset()" value="Reset" />-->
+<!--    <input type="submit" ng-click="update(user)" value="Save" />-->
     <button class="btn btn-lg btn-block" type="submit" ng-class="{ 'btn-primary': registerForm.$valid &amp;&amp; registerForm.$dirty, 'btn-success': redirect }" ng-disabled="registerForm.$invalid || registerForm.$pristine || xhr || redirect">
         <span ng-hide="redirect">Register <i class="fa fa-repeat fa-spin" ng-show="xhr"></i></span>
       </button>
 </form>
 
 <script>
+    var baseUrl = "http://localhost:8080"
     angular.module("myapp", [])
-    
-    .controller("login-form", function($scope) {
-       $scope.user = {};
-    //    $scope.user.name = "ali";
-    //    $scope.user.email = "aliasdsafdas";
-       $scope.submit = function(formInstance){
-        console.log(  $scope.user.password  );
-        console.log( $scope.user );
-        console.log(formInstance.user)
-       }
-    });
+        .controller("login-form", function ($scope, $http) {
+            $scope.user = {};
+            $scope.submit = function (formInstance) {
+                console.log($scope.user.password);
+                console.log($scope.user);
+                console.log(formInstance.user);
+                $http.post(baseUrl + '/login', $scope.user)
+                    .success(function (data, status, headers, config) {
+                        console.log(data);
+                    });
+            }
+        });
   
  </script>
  
