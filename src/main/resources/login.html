@@ -3,20 +3,33 @@
    <head>
       <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
    </head>
-<body ng-app = "myapp">   
+   <style>
+body {
+    margin:50px 0px; padding:0px;
+    text-align:center;
+    align:center;
+}
+.form-div {
+  border: 3px solid blue;
+  justify-content: center;
+  align-items: center;
+}
+</style>
+<body ng-app = "myapp">
+<div class="form-div">
 <form class="simple-form" name="form-login" ng-controller="login-form" ng-submit="submit(form-login)" >
  
     <label>E-mail: </label><br/>
     <input type="text" ng-model="user.email" required
            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/><br/>
     <label>Password:</label><br/> 
-    <input type="text" ng-model="user.password" required  minlength="8" maxlength="15"/><br/>
+    <input type="text" ng-model="user.password" required  minlength="8" maxlength="15"/><br/><br/>
 
     <button class="btn btn-lg btn-block" type="submit" ng-class="{ 'btn-primary': registerForm.$valid &amp;&amp; registerForm.$dirty, 'btn-success': redirect }" ng-disabled="registerForm.$invalid || registerForm.$pristine || xhr || redirect">
         <span ng-hide="redirect"> Login <i class="fa fa-repeat fa-spin" ng-show="xhr"></i></span>
       </button>
 </form>
-
+</div>
 <script>
     var baseUrl = "http://localhost:8080"
     angular.module("myapp", [])
