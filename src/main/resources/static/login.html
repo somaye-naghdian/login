@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
+</head>
+<style>
+body {
+    margin:50px 0px; padding:0px;
+    text-align:center;
+    align:center;
+}
+.form-div {
+  border: 3px solid blue;
+  justify-content: center;
+  align-items: center;
+}
+
+
+</style>
+<body ng-app="myapp">
+<div class="form-div">
+    <form class="simple-form" name="form-login" ng-controller="login-form" ng-submit="submit(form-login)">
+
+        <label>E-mail: </label><br/>
+        <input type="text" ng-model="user.email" required
+               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/><br/>
+        <label>Password:</label><br/>
+        <input type="text" ng-model="user.password" required minlength="8" maxlength="15"/><br/><br/>
+
+        <button class="btn btn-lg btn-block" type="submit"
+                ng-class="{ 'btn-primary': registerForm.$valid &amp;&amp; registerForm.$dirty, 'btn-success': redirect }"
+                ng-disabled="registerForm.$invalid || registerForm.$pristine || xhr || redirect">
+            <span ng-hide="redirect"> Login <i class="fa fa-repeat fa-spin" ng-show="xhr"></i></span>
+        </button>
+        </br></br>
+    </form>
+</div>
+
+
+<script>
+    var baseUrl = "http://localhost:8080"
+
+    angular.module("myapp", [])
+        .controller("login-form", function ($scope, $http) {
+            $scope.user = {};
+            $scope.submit = function (formInstance) {
+                console.log($scope.user.password);
+                console.log($scope.user);
+                console.log(formInstance.user);
+                $http.post(baseUrl + '/login', $scope.user)
+                    .success(function (data, status, headers, config) {
+                        console.log(data);
+                        alert(status);
+
+                    })
+                    .error(function(data, status){
+                       alert(status);
+                    });
+                    }
+        });
+  
+
+
+</script>
+
+</body>
+</html>
