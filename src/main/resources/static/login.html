@@ -2,6 +2,7 @@
 <html>
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
 </head>
 <style>
 body {
@@ -25,7 +26,7 @@ body {
         <input type="text" ng-model="user.email" required
                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"/><br/>
         <label>Password:</label><br/>
-        <input type="text" ng-model="user.password" required minlength="8" maxlength="15"/><br/><br/>
+        <input type="password" ng-model="user.password" required minlength="8" maxlength="15"/><br/><br/>
 
         <button class="btn btn-lg btn-block" type="submit"
                 ng-class="{ 'btn-primary': registerForm.$valid &amp;&amp; registerForm.$dirty, 'btn-success': redirect }"
@@ -39,18 +40,17 @@ body {
 
 <script>
     var baseUrl = "http://localhost:8080"
-
-    angular.module("myapp", [])
+    var messageUrl = "http://localhost:8080/message"
+    var app = angular.module("myApp", ["ngRoute"]);
+    angular.module("myapp", ["ngRoute"])
         .controller("login-form", function ($scope, $http) {
             $scope.user = {};
             $scope.submit = function (formInstance) {
-                console.log($scope.user.password);
-                console.log($scope.user);
-                console.log(formInstance.user);
                 $http.post(baseUrl + '/login', $scope.user)
                     .success(function (data, status, headers, config) {
                         console.log(data);
                         alert(status);
+                        window.location = messageUrl;
 
                     })
                     .error(function(data, status){
@@ -58,7 +58,6 @@ body {
                     });
                     }
         });
-  
 
 
 </script>
